@@ -2,6 +2,8 @@ package com.FemCoders.DropTheLink.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "playlists")
@@ -17,9 +19,14 @@ public class Playlist {
     @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
     private Boolean isPublished = false;
+
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<PlaylistVideo> videos = new ArrayList<>();
 }

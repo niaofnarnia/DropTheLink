@@ -2,7 +2,7 @@ package com.FemCoders.DropTheLink.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import java.util.List;
 import java.util.ArrayList;
 
 @Entity
@@ -28,4 +28,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Playlist> playlists = new ArrayList<>();
 }

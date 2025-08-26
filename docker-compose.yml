@@ -1,0 +1,28 @@
+services:
+  mysql-db:
+    image: mysql:8.0.43
+    container_name: mysql-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=drop_the_link_db
+    volumes:
+      - drop_the_link_db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  spring-app:
+    build: .
+    container_name: spring-app
+    restart: always
+
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/drop_the_link_db?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8080:8080"
+volumes:
+  drop_the_link_db-data:

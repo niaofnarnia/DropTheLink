@@ -1,4 +1,4 @@
-package com.FemCoders.DropTheLink.dtos.user;
+package com.FemCoders.DropTheLink.auth.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

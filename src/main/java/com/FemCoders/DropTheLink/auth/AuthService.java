@@ -1,11 +1,11 @@
-package com.FemCoders.DropTheLink.services;
+package com.FemCoders.DropTheLink.auth;
 
-import com.FemCoders.DropTheLink.dtos.user.LoginRequest;
-import com.FemCoders.DropTheLink.dtos.user.LoginResponse;
-import com.FemCoders.DropTheLink.dtos.user.RegisterRequest;
-import com.FemCoders.DropTheLink.models.Role;
-import com.FemCoders.DropTheLink.models.User;
-import com.FemCoders.DropTheLink.repositories.UserRepository;
+import com.FemCoders.DropTheLink.auth.dtos.LoginRequest;
+import com.FemCoders.DropTheLink.auth.dtos.LoginResponse;
+import com.FemCoders.DropTheLink.auth.dtos.RegisterRequest;
+import com.FemCoders.DropTheLink.user.Role;
+import com.FemCoders.DropTheLink.user.User;
+import com.FemCoders.DropTheLink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;

@@ -1,5 +1,6 @@
-package com.FemCoders.DropTheLink.models;
+package com.FemCoders.DropTheLink.video;
 
+import com.FemCoders.DropTheLink.playlist.model.PlaylistVideo;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;

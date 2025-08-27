@@ -1,4 +1,4 @@
-package com.FemCoders.DropTheLink.models;
+package com.FemCoders.DropTheLink.playlist.model;
 
 import jakarta.persistence.*;
 import lombok.*;

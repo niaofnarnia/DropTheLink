@@ -1,9 +1,8 @@
-package com.FemCoders.DropTheLink.controllers;
+package com.FemCoders.DropTheLink.auth;
 
-import com.FemCoders.DropTheLink.dtos.user.LoginRequest;
-import com.FemCoders.DropTheLink.dtos.user.LoginResponse;
-import com.FemCoders.DropTheLink.dtos.user.RegisterRequest;
-import com.FemCoders.DropTheLink.services.AuthService;
+import com.FemCoders.DropTheLink.auth.dtos.LoginRequest;
+import com.FemCoders.DropTheLink.auth.dtos.LoginResponse;
+import com.FemCoders.DropTheLink.auth.dtos.RegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

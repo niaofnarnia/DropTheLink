@@ -1,6 +1,5 @@
-package com.FemCoders.DropTheLink.repositories;
+package com.FemCoders.DropTheLink.user;
 
-import com.FemCoders.DropTheLink.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

@@ -1,5 +1,6 @@
-package com.FemCoders.DropTheLink.models;
+package com.FemCoders.DropTheLink.playlist.model;
 
+import com.FemCoders.DropTheLink.video.Video;
 import jakarta.persistence.*;
 import lombok.*;
 

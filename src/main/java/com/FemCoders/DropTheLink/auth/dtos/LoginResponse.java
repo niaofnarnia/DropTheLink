@@ -1,3 +1,3 @@
-package com.FemCoders.DropTheLink.dtos.user;
+package com.FemCoders.DropTheLink.auth.dtos;
 
 public record LoginResponse (String token) {}

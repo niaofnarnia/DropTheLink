@@ -3,10 +3,12 @@ package com.FemCoders.DropTheLink.auth;
 import com.FemCoders.DropTheLink.auth.dtos.LoginRequest;
 import com.FemCoders.DropTheLink.auth.dtos.LoginResponse;
 import com.FemCoders.DropTheLink.auth.dtos.RegisterRequest;
+import com.FemCoders.DropTheLink.auth.security.jwt.JwtService;
 import com.FemCoders.DropTheLink.user.Role;
 import com.FemCoders.DropTheLink.user.User;
 import com.FemCoders.DropTheLink.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
     public void register(RegisterRequest request) {
         Optional<User> existingUserByUsername = userRepository.findByUsernameIgnoreCase(request.username());
         if(existingUserByUsername.isPresent()){
@@ -26,7 +30,7 @@ public class AuthService {
         User newUser = User.builder()
                 .username(request.username())
                 .email(request.email())
-                .password(request.password())
+                .password(passwordEncoder.encode(request.password()))
                 .role(Role.USER)
                 .build();
         userRepository.save(newUser);
@@ -37,10 +41,10 @@ public class AuthService {
             throw new RuntimeException("User not found with username: " + request.username());
         }
         User user = userOptional.get();
-        if(!request.password().equals(user.getPassword())){
+        if(!passwordEncoder.matches(request.password(), user.getPassword())){
             throw new RuntimeException("Login details are incorrect");
         }
-        String token = "jwt token for: " + user.getUsername();
+        String token = jwtService.generateToken(user.getUsername());
         return new LoginResponse(token);
     }
 }

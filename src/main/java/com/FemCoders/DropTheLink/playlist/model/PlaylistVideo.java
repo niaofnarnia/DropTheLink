@@ -12,7 +12,9 @@ import lombok.*;
 @Builder
 
 public class PlaylistVideo {
-    private @EmbeddedId PlaylistVideoId id;
+
+    @EmbeddedId
+    private PlaylistVideoId id;
 
     private int position;
 

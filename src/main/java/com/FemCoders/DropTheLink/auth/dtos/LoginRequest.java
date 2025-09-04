@@ -3,8 +3,8 @@ package com.FemCoders.DropTheLink.auth.dtos;
 import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(
-        @NotBlank(message = "Username is required")
+        @NotBlank(message = "Username cannot be blank")
         String username,
-        @NotBlank(message = "Password is required")
+        @NotBlank(message = "Password cannot be blank")
         String password
 ) { }

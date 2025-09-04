@@ -4,12 +4,19 @@ services:
     container_name: mysql-db
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=drop_the_link_db
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - JWT_SECRET_KEY=c3VwZXJzZWNyZXRqd3RrZXkxMjM0NTY3ODkwYWJjZGVmZ2hpams=
+      - JWT_EXPIRATION=1800000
     volumes:
       - drop_the_link_db-data:/var/lib/mysql
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      start_period: 30s
 
   spring-app:
     build: .
@@ -17,11 +24,15 @@ services:
     restart: always
 
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_healthy
+
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/drop_the_link_db?useSSL=false&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
     ports:
       - "8080:8080"
 volumes:

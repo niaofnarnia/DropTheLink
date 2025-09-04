@@ -1,5 +1,6 @@
-package com.FemCoders.DropTheLink.auth;
+package com.FemCoders.DropTheLink.user;
 
+import com.FemCoders.DropTheLink.auth.AuthService;
 import com.FemCoders.DropTheLink.auth.dtos.LoginRequest;
 import com.FemCoders.DropTheLink.auth.dtos.LoginResponse;
 import com.FemCoders.DropTheLink.auth.dtos.RegisterRequest;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class UserController {
     private final AuthService authService;
 
     @PostMapping("/register")

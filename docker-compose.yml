@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   mysql-db:
     image: mysql:8.0.43
@@ -7,7 +6,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - JWT_SECRET_KEY=supersecretjwtkey123
+      - JWT_SECRET_KEY=c3VwZXJzZWNyZXRqd3RrZXkxMjM0NTY3ODkwYWJjZGVmZ2hpams=
       - JWT_EXPIRATION=1800000
     volumes:
       - drop_the_link_db-data:/var/lib/mysql

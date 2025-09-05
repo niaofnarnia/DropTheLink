@@ -16,7 +16,8 @@ public class PlaylistVideo {
     @EmbeddedId
     private PlaylistVideoId id;
 
-    private int position;
+    @Column(nullable = false)
+    private Integer position;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("playlistId")

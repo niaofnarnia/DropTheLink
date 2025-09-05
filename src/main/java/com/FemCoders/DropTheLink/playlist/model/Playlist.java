@@ -33,5 +33,7 @@ public class Playlist {
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OrderBy("position ASC")
     private List<PlaylistVideo> videos = new ArrayList<>();
 }

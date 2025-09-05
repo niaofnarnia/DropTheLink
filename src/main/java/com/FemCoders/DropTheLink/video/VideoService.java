@@ -73,10 +73,20 @@ public class VideoService {
             throw new UnauthorizedOperationException("You can only remove videos from your own playlists");
         }
 
-        playlist.getVideos().removeIf(pv -> pv.getVideo().getId().equals(videoId));
+        boolean wasRemoved = playlist.getVideos().removeIf(pv -> pv.getVideo().getId().equals(videoId));
+
+        if(!wasRemoved) {
+            throw new ResourceNotFoundException("Video not found in playlist with id: " + playlistId);
+        }
 
         for (int i = 0; i < playlist.getVideos().size(); i++) {
             playlist.getVideos().get(i).setPosition(i + 1);
+        }
+
+        boolean isUsedInOtherPlaylists = videoRepository.videoIdNotInOtherPlaylist(videoId, playlistId);
+
+        if(!isUsedInOtherPlaylists) {
+            videoRepository.deleteById(videoId);
         }
 
         playlistRepository.save(playlist);

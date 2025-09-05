@@ -1,9 +1,9 @@
 INSERT INTO users (username, email, password, role) VALUES
-('niae', 'niaofnarnia@example.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'USER'),
-('goddessbless', 'blessed@example.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'USER'),
-('livinlikenah', 'yes.and@example.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'USER'),
-('catlover', 'kitty@example.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'USER'),
-('nunya', 'mind_ya@example.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', 'USER');
+('niae', 'niaofnarnia@example.com', '$2a$12$RPJb4Q6V/QBg0ptyWPQLOuvTY.FDpLaT3NAAEFKA2BKmyupbiP9My', 'USER'),
+('goddessbless', 'blessed@example.com', '$2a$12$RPJb4Q6V/QBg0ptyWPQLOuvTY.FDpLaT3NAAEFKA2BKmyupbiP9My', 'USER'),
+('livinlikenah', 'yes.and@example.com', '$2a$12$RPJb4Q6V/QBg0ptyWPQLOuvTY.FDpLaT3NAAEFKA2BKmyupbiP9My', 'USER'),
+('catlover', 'kitty@example.com', '$2a$12$RPJb4Q6V/QBg0ptyWPQLOuvTY.FDpLaT3NAAEFKA2BKmyupbiP9My', 'USER'),
+('nunya', 'mind_ya@example.com', '$2a$12$RPJb4Q6V/QBg0ptyWPQLOuvTY.FDpLaT3NAAEFKA2BKmyupbiP9My', 'USER');
 
 INSERT INTO playlists (name, description, is_published, user_id) VALUES
 ('My Favorites', 'Collection of some of my all time favorite songs', true, 1),

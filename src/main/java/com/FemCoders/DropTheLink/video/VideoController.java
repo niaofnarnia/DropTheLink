@@ -20,10 +20,10 @@ public class VideoController {
     }
 
     @DeleteMapping("/playlist/{playlistId}/video/{videoId}")
-    public ResponseEntity<Void> removeVideoFromPlaylist(
+    public ResponseEntity<String> removeVideoFromPlaylist(
             @PathVariable Long playlistId,
             @PathVariable Long videoId) {
         videoService.removeVideoFromPlaylist(playlistId, videoId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Video removed successfully from playlist!");
     }
 }

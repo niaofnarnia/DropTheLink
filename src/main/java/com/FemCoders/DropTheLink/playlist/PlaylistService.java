@@ -7,6 +7,7 @@ import com.FemCoders.DropTheLink.playlist.dtos.PlaylistResponse;
 import com.FemCoders.DropTheLink.playlist.dtos.UpdatePlaylistRequest;
 import com.FemCoders.DropTheLink.playlist.dtos.VideoResponse;
 import com.FemCoders.DropTheLink.playlist.model.Playlist;
+import com.FemCoders.DropTheLink.playlist.model.PlaylistVideo;
 import com.FemCoders.DropTheLink.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class PlaylistService {
 
     private PlaylistResponse mapToResponse (Playlist playlist) {
         List<VideoResponse> videoResponses = playlist.getVideos().stream()
+                .sorted(Comparator.comparing(PlaylistVideo::getPosition, Comparator.nullsLast(Integer::compareTo)))
                 .map(pv -> new VideoResponse(
                         pv.getVideo().getId(),
                         pv.getVideo().getTitle(),

@@ -9,16 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    services:
-      mysql:
-        image: mysql:8.0.43
-        env:
-          MYSQL_ROOT_PASSWORD: testpassword
-          MYSQL_DATABASE: drop_the_link_db_test
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v3
@@ -36,13 +26,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Wait for MySQL
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" --silent; do
-            sleep 1
-          done
-
-      - name: Build with Maven (skip tests since none exist)
+      - name: Build with Maven (skip tests)
         run: ./mvnw clean compile package -DskipTests
         env:
           DB_USERNAME: root

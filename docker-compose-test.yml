@@ -1,0 +1,60 @@
+services:
+  mysql-test-db:
+    image: mysql:8.0.43
+    container_name: mysql-test-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-testpassword}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-drop_the_link_db_test}
+    volumes:
+      - test_db_data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-testpassword}"]
+      timeout: 20s
+      retries: 10
+      start_period: 30s
+    networks:
+      - test-network
+
+  spring-test-app:
+    image: openjdk:21-jdk-slim
+    container_name: spring-test-app
+    restart: always
+    depends_on:
+      mysql-test-db:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-test-db:3306/${MYSQL_DATABASE:-drop_the_link_db_test}?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-testpassword}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-c3VwZXJzZWNyZXRqd3RrZXkxMjM0NTY3ODkwYWJjZGVmZ2hpams=}
+      - JWT_EXPIRATION=${JWT_EXPIRATION:-1800000}
+      - MAVEN_OPTS=-Xmx512m
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+    working_dir: /app
+    command: |
+      bash -c "
+        apt-get update && apt-get install -y maven default-mysql-client &&
+        echo 'Waiting for MySQL to be ready...' &&
+        while ! mysqladmin ping -h mysql-test-db -u root -p${DB_PASSWORD:-testpassword} --silent; do
+          echo 'Waiting for MySQL...' &&
+          sleep 2
+        done &&
+        echo 'MySQL is ready! Running tests...' &&
+        ./mvnw clean test -Dspring.profiles.active=test &&
+        echo 'Tests completed successfully!'
+      "
+    networks:
+      - test-network
+
+volumes:
+  test_db_data:
+
+networks:
+  test-network:
+    driver: bridge

@@ -1,0 +1,38 @@
+FROM openjdk:21-jdk-slim
+
+RUN apt-get update && apt-get install -y \
+    maven \
+    default-mysql-client \
+    wget \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY mvnw mvnw.cmd pom.xml ./
+COPY .mvn .mvn
+
+RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+
+COPY src src
+
+RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "Waiting for MySQL to be ready..."\n\
+while ! mysqladmin ping -h mysql-test-db -u root -p${DB_PASSWORD} --silent; do\n\
+    echo "Waiting for MySQL..."\n\
+    sleep 2\n\
+done\n\
+echo "MySQL is ready!"\n\
+echo "Running build validation (no tests implemented yet)..."\n\
+./mvnw clean compile package -DskipTests\n\
+echo "Build validation completed successfully!"' > /app/run-validation.sh
+
+RUN chmod +x /app/run-validation.sh
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD echo "Validation container is healthy"
+
+EXPOSE 8080
+
+CMD ["/app/run-validation.sh"]
